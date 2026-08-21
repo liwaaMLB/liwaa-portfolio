@@ -5,6 +5,21 @@ export type SiteLinks = {
   resume: string;
 };
 
+export type ProjectImage = {
+  src: string;
+  alt: string;
+  label?: string;
+  caption?: string;
+  featured?: boolean;
+  width?: number;
+  height?: number;
+};
+
+export type ProjectCapability = {
+  title: string;
+  description: string;
+};
+
 export type Project = {
   slug: string;
   number: string;
@@ -14,12 +29,18 @@ export type Project = {
   context?: string;
   description: string;
   overview?: string;
+  contribution?: string;
+  engineeringApproach?: string;
   aiDevelopmentNote?: string;
   technologies: readonly string[];
   technologiesNote?: string;
   features?: readonly string[];
+  capabilities?: readonly ProjectCapability[];
   github?: string;
   live?: string;
+  heroImage?: ProjectImage;
+  gallery?: readonly ProjectImage[];
+  confidentialityNote?: string;
 };
 
 export type ExperienceEntry = {

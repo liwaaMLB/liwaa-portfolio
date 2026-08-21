@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import type { Project } from "@/lib/types";
 import { ProjectImagePlaceholder } from "@/components/projects/project-image-placeholder";
+import { ProjectScreenshot } from "@/components/projects/project-screenshot";
 import { Tag } from "@/components/ui/primitives";
 import { AnimatedButtonLink } from "@/components/motion/animated-button-link";
 import {
@@ -53,7 +54,14 @@ export function AnimatedProjectCard({
               }
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
-              <ProjectImagePlaceholder title={project.title} />
+              {project.heroImage ? (
+                <ProjectScreenshot
+                  image={project.heroImage}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                />
+              ) : (
+                <ProjectImagePlaceholder title={project.title} />
+              )}
             </motion.div>
           </div>
         </Link>
