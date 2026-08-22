@@ -11,8 +11,8 @@ export const site = {
   links: {
     github: "https://github.com/liwaaMLB",
     linkedin: "https://www.linkedin.com/in/liwaa-al-jaramani-033907262",
-    email: "mailto:hello@example.com",
-    resume: "#",
+    email: "mailto:lewaamalaeb122@gmail.com",
+    resume: "/resume/Liwaa_Aljaramani_CV.pdf",
   } satisfies SiteLinks,
 } as const;
 

@@ -97,6 +97,8 @@ export function ScrollNavigation() {
 
           <motion.a
             href={site.links.resume}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             whileHover={
               prefersReducedMotion ? undefined : { y: -1, opacity: 0.92 }

@@ -80,6 +80,7 @@ export function HeroAnimated() {
                 variant="secondary"
                 showArrow
                 arrow="↓"
+                external
               >
                 Download CV
               </AnimatedButtonLink>
