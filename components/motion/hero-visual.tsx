@@ -12,47 +12,96 @@ const floatingCards = [
   {
     eyebrow: "AI AGENT",
     body: "Planning, building, and reviewing with AI.",
-    position: "left-[-6%] top-[10%] lg:left-[-10%]",
+    position: "left-[-6%] top-[8%] lg:left-[-4%]",
     delay: 0.1,
   },
   {
     eyebrow: "CLEAN CODE",
     body: "Readable. Maintainable. Scalable.",
-    position: "right-[-4%] top-[42%] lg:right-[-8%]",
+    position: "right-[-4%] top-[38%] lg:right-[-2%]",
     delay: 0.22,
   },
   {
     eyebrow: "FULL-STACK",
     body: "From database to interface. End-to-end.",
-    position: "bottom-[-8%] left-[14%]",
+    position: "bottom-[2%] left-[-4%] lg:left-[-2%]",
     delay: 0.34,
   },
 ] as const;
 
-function WorkspacePanel() {
+function StatusBadge({ className = "" }: { className?: string }) {
+  const prefersReducedMotion = useReducedMotion() ?? false;
+
   return (
-    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border bg-surface">
-      <Image
-        src="/images/developer-workspace.png"
-        alt="Dark, blue-lit software developer workstation with a code editor, a dashboard interface, and a laptop on the desk"
-        fill
-        priority
-        sizes="(min-width: 1024px) 42vw, (min-width: 640px) 70vw, 90vw"
-        className="object-cover"
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: 12, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={getTransition(prefersReducedMotion, 0.5, 0.46)}
+    >
+      <motion.div
+        className="inline-flex items-center gap-1.5 rounded-full border border-accent/20 bg-surface/80 px-3.5 py-2 text-xs text-accent-bright shadow-[0_0_24px_-8px_rgb(76_141_255/0.35)] backdrop-blur-md"
+        animate={getDriftAnimation(prefersReducedMotion, 0.46)}
+      >
+        <span className="h-1.5 w-1.5 rounded-full bg-accent-bright" />
+        AI agent active
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function ProfilePortrait() {
+  const prefersReducedMotion = useReducedMotion() ?? false;
+
+  return (
+    <div className="relative mx-auto aspect-square w-full max-w-[22rem] lg:max-w-[26rem]">
+      {/* Soft blue → violet glow behind the rings, echoing the portfolio's accent color */}
+      <motion.div
+        className="pointer-events-none absolute inset-[-14%] rounded-full opacity-70 blur-3xl"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgb(76 141 255 / 0.35), rgb(139 92 246 / 0.16), transparent 72%)",
+        }}
+        animate={
+          prefersReducedMotion
+            ? undefined
+            : { opacity: [0.55, 0.8, 0.55] }
+        }
+        transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
       />
 
-      {/* Dark overlays so the photo reads as atmosphere behind the portfolio,
-          not a raw screenshot competing with the UI on top of it — kept
-          light enough that the workstation itself stays clearly visible. */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-background/20" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_75%_20%,rgb(76_141_255/0.12),transparent_60%)]" />
+      {/* Concentric rings */}
+      <div className="pointer-events-none absolute inset-0 rounded-full border border-accent/15" />
+      <div className="pointer-events-none absolute inset-[7%] rounded-full border border-border-strong" />
+      <div className="pointer-events-none absolute inset-[13%] rounded-full border border-[rgb(139_92_246/0.22)]" />
 
-      <div className="absolute inset-x-0 bottom-0 flex items-center justify-between border-t border-border/70 bg-background/50 px-5 py-3 text-xs text-foreground-subtle backdrop-blur-sm sm:px-7">
-        <span>build.ts</span>
-        <span className="inline-flex items-center gap-1.5 text-accent-bright">
-          <span className="h-1.5 w-1.5 rounded-full bg-accent-bright" />
-          AI agent active
-        </span>
+      {/* Subtle orbit dots drifting around the rings */}
+      <motion.div
+        className="pointer-events-none absolute inset-0"
+        animate={prefersReducedMotion ? undefined : { rotate: 360 }}
+        transition={{ duration: 60, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+      >
+        <span className="absolute left-1/2 top-0 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-bright shadow-[0_0_8px_2px_rgb(124_176_255/0.55)]" />
+      </motion.div>
+      <motion.div
+        className="pointer-events-none absolute inset-0"
+        animate={prefersReducedMotion ? undefined : { rotate: -360 }}
+        transition={{ duration: 80, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+      >
+        <span className="absolute bottom-[6%] right-[10%] h-1 w-1 rounded-full bg-[rgb(139_92_246)] shadow-[0_0_6px_2px_rgb(139_92_246/0.5)]" />
+      </motion.div>
+
+      {/* Portrait */}
+      <div className="absolute inset-[19%] overflow-hidden rounded-full border border-border-strong bg-surface shadow-[0_0_40px_-8px_rgb(76_141_255/0.4)]">
+        <Image
+          src="/images/profile-liwaa.png"
+          alt="Portrait of Liwaa Aljaramani"
+          fill
+          priority
+          sizes="(min-width: 1024px) 30vw, (min-width: 640px) 55vw, 70vw"
+          className="object-cover"
+        />
       </div>
     </div>
   );
@@ -101,14 +150,14 @@ export function HeroVisual() {
 
   return (
     <motion.div
-      className="relative mx-auto w-full max-w-md lg:max-w-none"
+      className="relative mx-auto w-full max-w-md lg:max-w-none lg:translate-x-6"
       initial="hidden"
       animate="visible"
       variants={variants}
       transition={getTransition(prefersReducedMotion, 0.6, 0.3)}
     >
       <div className="lg:px-8 lg:py-6">
-        <WorkspacePanel />
+        <ProfilePortrait />
       </div>
 
       {/* Overlapping placement on larger screens */}
@@ -125,10 +174,13 @@ export function HeroVisual() {
             />
           </div>
         ))}
+        <div className="pointer-events-auto absolute right-[10%] top-[3%]">
+          <StatusBadge />
+        </div>
       </div>
 
-      {/* Stacked, non-overlapping placement below the panel on small/medium screens */}
-      <div className="mt-5 flex flex-wrap justify-center gap-3 lg:hidden">
+      {/* Stacked, non-overlapping placement below the portrait on small/medium screens */}
+      <div className="mt-5 flex flex-wrap items-center justify-center gap-3 lg:hidden">
         {floatingCards.map((card) => (
           <FloatingCard
             key={card.eyebrow}
@@ -137,6 +189,7 @@ export function HeroVisual() {
             delay={card.delay}
           />
         ))}
+        <StatusBadge />
       </div>
     </motion.div>
   );
