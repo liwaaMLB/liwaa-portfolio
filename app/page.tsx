@@ -1,4 +1,5 @@
 import { About } from "@/components/about";
+import { Certificates } from "@/components/certificates";
 import { Education } from "@/components/education";
 import { Experience } from "@/components/experience";
 import { Footer } from "@/components/footer";
@@ -21,6 +22,7 @@ export default function Home() {
         <SelectedWork />
         <Experience />
         <Education />
+        <Certificates />
         <About />
       </main>
       <Footer />
